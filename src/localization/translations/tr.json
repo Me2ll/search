@@ -1,15 +1,1 @@
-{
-    "sticker": {
-      "sticker": "ETİKET SETİ",
-      "album": "Etiket albümü",
-      "daily": "GÜNLÜK ÇIKARTMANIZI ALIN",
-      "title": "GÜNLÜK ÇIKARTMA SETLERİNİ AÇMAK İÇİN 3 ÇIKARTMA SETİNİZ VAR",
-      "paste": "ALBÜME YAPIŞTIR",
-      "warn": "Seçim Hakkınız Bitmiştir.."
-    },
-  
-    "error": {
-      "notFound": "Sayfa Bulunamadı..",
-      "homepage": "Ana Sayfaya Dön"
-    }
-  }
+{}

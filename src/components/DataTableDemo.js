@@ -4,12 +4,12 @@ import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
-import { CustomerService } from '../service/CustomerService';
-import './DataTableDemo.css';
+import { UserService } from '../service/UserService';
+import './DataTableDemo.scss';
 
 const DataTableDemo = () => {
-    const [customers, setCustomers] = useState(null);
-    const [selectedCustomers, setSelectedCustomers] = useState(null);
+    const [users, setUsers] = useState(null);
+    const [selectedUsers, setSelectedUsers] = useState(null);
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
         'name': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
@@ -25,13 +25,13 @@ const DataTableDemo = () => {
 
 
 
-    const customerService = new CustomerService();
+    const userService = new UserService();
 
     useEffect(() => {
-        customerService.getCustomersLarge().then(data => { setCustomers(getCustomers(data)); setLoading(false) });
+        userService.getUsersLarge().then(data => { setUsers(getUsers(data)); setLoading(false) });
     }, []);
 
-    const getCustomers = (data) => {
+    const getUsers = (data) => {
         return [...data || []].map(d => {
             d.date = new Date(d.date);
             return d;
@@ -51,10 +51,10 @@ const DataTableDemo = () => {
 
     const renderHeader = () => {
         return (
-            <div className="flex justify-content-between align-items-center" >
-                <span className="p-input-icon-left">
+            <div className="flex justify-content-between align-items-center" style={{ backgroundColor: "#433E5C"}} >
+                <span className="p-input-icon-left" >
                     <i className="pi pi-search" />
-                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="SEARCH(Client Name / Policy Number)" />
+                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="SEARCH(Client Name / Policy Number)" style={{ backgroundColor: "#433E5C"  ,color:"white",borderColor:"#433E5C",width:"150%"}} />
                 </span>
             </div>
         )
@@ -69,16 +69,15 @@ const DataTableDemo = () => {
                 <span className="image-text">
                     <i className="pi pi-phone" />
                     {rowData.user.phone}</span>
-                @ <span className="image-text" style={{marginLeft:"5%"}}>{rowData.user.email}</span>
+                @ <span className="image-text" style={{ marginLeft: "5%" }}>{rowData.user.email}</span>
             </React.Fragment>
         );
     }
 
     const representativeBodyTemplate = (rowData) => {
-        debugger
         const policy = rowData.policy;
         return (
-            <React.Fragment>
+            <React.Fragment >
                 <i className="pi pi-file" />
                 <span >{policy}</span>
             </React.Fragment>
@@ -91,13 +90,13 @@ const DataTableDemo = () => {
     return (
         <div className="datatable-doc-demo">
             <div className="card">
-                <DataTable value={customers} className="p-datatable-customers" header={header}
-                    dataKey="id" rowHover selection={selectedCustomers} onSelectionChange={e => setSelectedCustomers(e.value)}
+                <DataTable value={users} className="p-datatable-customers" header={header}
+                    dataKey="id" rowHover selection={selectedUsers} onSelectionChange={e => setSelectedUsers(e.value)}
                     filters={filters} filterDisplay="menu" loading={loading} responsiveLayout="scroll"
                     globalFilterFields={['user.name', 'country.name', 'representative']} emptyMessage="No found."
                 >
-                    <Column field="user.email"  body={countryBodyTemplate} />
-                    <Column  showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}  body={representativeBodyTemplate}
+                    <Column field="user.email" body={countryBodyTemplate} />
+                    <Column showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }} body={representativeBodyTemplate}
                     />
                 </DataTable>
             </div>
